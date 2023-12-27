@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProdutoController = void 0;
 const common_1 = require("@nestjs/common");
 const produto_repository_1 = require("./produto.repository");
+const CriaProduto_dto_1 = require("./dto/CriaProduto.dto");
 let ProdutoController = class ProdutoController {
     constructor(produtoRepository) {
         this.produtoRepository = produtoRepository;
@@ -32,7 +33,7 @@ __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [CriaProduto_dto_1.CriaProdutoDTO]),
     __metadata("design:returntype", void 0)
 ], ProdutoController.prototype, "criaNovo", null);
 __decorate([
