@@ -6,6 +6,7 @@ services:
     environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: db_loja
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
@@ -20,6 +21,8 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: ${DB_ADMIN_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: db_loja
+
     ports:
       - "8081:80"
     depends_on:
