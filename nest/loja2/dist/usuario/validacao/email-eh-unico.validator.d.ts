@@ -1,8 +1,8 @@
 import { ValidationArguments, ValidationOptions, ValidatorConstraintInterface } from "class-validator";
-import { UsuarioRepository } from "../usuario.repository";
+import { UsuarioService } from "../usuario.service";
 export declare class EmailEhUnicoValidator implements ValidatorConstraintInterface {
-    private usuarioRepository;
-    constructor(usuarioRepository: UsuarioRepository);
+    private usuarioService;
+    constructor(usuarioService: UsuarioService);
     validate(value: any, validationArguments?: ValidationArguments): Promise<boolean>;
 }
 export declare const EmailEhUnico: (opcoesDeValidacao: ValidationOptions) => (objeto: Object, propriedade: string) => void;

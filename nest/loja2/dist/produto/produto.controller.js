@@ -16,12 +16,22 @@ exports.ProdutoController = void 0;
 const common_1 = require("@nestjs/common");
 const produto_repository_1 = require("./produto.repository");
 const CriaProduto_dto_1 = require("./dto/CriaProduto.dto");
+const produto_service_1 = require("./produto.service");
+const crypto_1 = require("crypto");
+const produto_entity_1 = require("./produto.entity");
 let ProdutoController = class ProdutoController {
-    constructor(produtoRepository) {
+    constructor(produtoRepository, produtoService) {
         this.produtoRepository = produtoRepository;
+        this.produtoService = produtoService;
     }
     criaNovo(dadosProduto) {
-        const produtoCadastrado = this.produtoRepository.salva(dadosProduto);
+        const produto = new produto_entity_1.ProdutoEntity();
+        produto.id = (0, crypto_1.randomUUID)();
+        produto.nome = dadosProduto.nome;
+        produto.usuarioId = dadosProduto.usuarioId;
+        produto.valor = dadosProduto.valor;
+        produto.quantidade = dadosProduto.quantidade;
+        const produtoCadastrado = this.produtoService.criaProduto(produto);
         return produtoCadastrado;
     }
     listaTodos() {
@@ -44,6 +54,6 @@ __decorate([
 ], ProdutoController.prototype, "listaTodos", null);
 exports.ProdutoController = ProdutoController = __decorate([
     (0, common_1.Controller)('produtos'),
-    __metadata("design:paramtypes", [produto_repository_1.ProdutoRepository])
+    __metadata("design:paramtypes", [produto_repository_1.ProdutoRepository, produto_service_1.ProdutoService])
 ], ProdutoController);
 //# sourceMappingURL=produto.controller.js.map

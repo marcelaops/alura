@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { ProdutoCaracteristica } from "./produto-caracteristica.entity";
 
 @Entity({ name: 'produtos'})
 export class ProdutoEntity {
@@ -22,4 +23,11 @@ export class ProdutoEntity {
     
     @Column({ name: 'categoria', length: 100, nullable: false })
     categoria: string;
+
+    /* a tabela caracteristicasse relaciona 1 p muitos */
+    // acrescentar entity no nome ProdutoCaracteristica
+    @OneToMany(() => ProdutoCaracteristica, (produtoCaracteristica) => produtoCaracteristica.produto) 
+    caracteristicas: ProdutoCaracteristica[];
+
+    // fazer igual p imagem
 }

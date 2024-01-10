@@ -14,15 +14,15 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsuarioController = void 0;
 const common_1 = require("@nestjs/common");
-const usuario_repository_1 = require("./usuario.repository");
 const CriaUsuario_dto_1 = require("./dto/CriaUsuario.dto");
 const usuario_entity_1 = require("./usuario.entity");
 const uuid_1 = require("uuid");
 const ListaUsuario_dto_1 = require("./dto/ListaUsuario.dto");
 const AtualizaUsuario_dto_1 = require("./dto/AtualizaUsuario.dto");
+const usuario_service_1 = require("./usuario.service");
 let UsuarioController = class UsuarioController {
-    constructor(usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
+    constructor(usuarioService) {
+        this.usuarioService = usuarioService;
     }
     async criaUsuario(dadosDoUsuario) {
         const usuarioEntity = new usuario_entity_1.UsuarioEntity();
@@ -30,26 +30,26 @@ let UsuarioController = class UsuarioController {
         usuarioEntity.email = dadosDoUsuario.email;
         usuarioEntity.senha = dadosDoUsuario.senha;
         usuarioEntity.id = (0, uuid_1.v4)();
-        this.usuarioRepository.salvar(usuarioEntity);
+        this.usuarioService.criaUsuario(usuarioEntity);
         return {
             usuario: new ListaUsuario_dto_1.ListaUsuarioDTO(usuarioEntity.id, usuarioEntity.nome),
             message: 'usuário criado com sucesso'
         };
     }
     async listUsuarios() {
-        const usuariosSalvos = await this.usuarioRepository.listar();
-        const usuariosLista = usuariosSalvos.map(usuario => new ListaUsuario_dto_1.ListaUsuarioDTO(usuario.id, usuario.nome));
-        return usuariosLista;
+        const usuariosSalvos = await this.usuarioService.listaUsuarios();
+        console.log(usuariosSalvos);
+        return usuariosSalvos;
     }
     async atualizaUsuario(id, novosDados) {
-        const usuarioAtualizado = await this.usuarioRepository.atualiza(id, novosDados);
+        const usuarioAtualizado = await this.usuarioService.atualizaUsuario(id, novosDados);
         return {
             usuario: usuarioAtualizado,
             message: 'usuário atualizado',
         };
     }
     async removeUsuario(id) {
-        const usuarioRemovido = await this.usuarioRepository.remove(id);
+        const usuarioRemovido = await this.usuarioService.deletaUsuario(id);
         return {
             usuario: usuarioRemovido,
             message: 'usuário removido com sucesso'
@@ -87,6 +87,6 @@ __decorate([
 ], UsuarioController.prototype, "removeUsuario", null);
 exports.UsuarioController = UsuarioController = __decorate([
     (0, common_1.Controller)('/usuarios'),
-    __metadata("design:paramtypes", [usuario_repository_1.UsuarioRepository])
+    __metadata("design:paramtypes", [usuario_service_1.UsuarioService])
 ], UsuarioController);
 //# sourceMappingURL=usuario.controller.js.map

@@ -11,22 +11,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EmailEhUnico = exports.EmailEhUnicoValidator = void 0;
 const class_validator_1 = require("class-validator");
-const usuario_repository_1 = require("../usuario.repository");
 const common_1 = require("@nestjs/common");
+const usuario_service_1 = require("../usuario.service");
 let EmailEhUnicoValidator = class EmailEhUnicoValidator {
-    constructor(usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
+    constructor(usuarioService) {
+        this.usuarioService = usuarioService;
     }
     async validate(value, validationArguments) {
-        const usuarioComEmailExiste = await this.usuarioRepository.existeComEmail(value);
-        return !usuarioComEmailExiste;
+        return true;
     }
 };
 exports.EmailEhUnicoValidator = EmailEhUnicoValidator;
 exports.EmailEhUnicoValidator = EmailEhUnicoValidator = __decorate([
     (0, common_1.Injectable)(),
     (0, class_validator_1.ValidatorConstraint)({ async: true }),
-    __metadata("design:paramtypes", [usuario_repository_1.UsuarioRepository])
+    __metadata("design:paramtypes", [usuario_service_1.UsuarioService])
 ], EmailEhUnicoValidator);
 const EmailEhUnico = (opcoesDeValidacao) => {
     return (objeto, propriedade) => {
