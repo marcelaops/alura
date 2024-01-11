@@ -4,42 +4,49 @@
       "id": 3,
       "conteudo": "i love angular",
       "autoria": "iara",
-      "modelo": "modelo3"
+      "modelo": "modelo3",      
+      "favorito": true
     },
     {
       "conteudo": "bla bla 3 editado",
       "autoria": "eu editado",
       "modelo": "modelo3",
+      "favorito": false,
       "id": 4
     },
     {
       "conteudo": "bla bla 3 iara maria lidna demais",
       "autoria": "marcela",
       "modelo": "modelo2",
+      "favorito": false,
       "id": 5
     },
     {
       "conteudo": "bla bla 3 iara maria lidna demais",
       "autoria": "marcela",
       "modelo": "modelo2",
+      "favorito": false,
       "id": 6
     },
     {
       "conteudo": "testando testando",
       "autoria": "tester",
       "modelo": "modelo2",
+      "favorito": false,
       "id": 10
     },
     {
       "conteudo": "tentando criar",
       "autoria": "tentando criar",
       "modelo": "modelo2",
+      "favorito": false,
       "id": 11
     },
     {
       "conteudo": "testanmto mais de 6 pensamentos",
       "autoria": "mar",
       "modelo": "modelo2",
+      "favorito": false,
       "id": 19
     }
   ]

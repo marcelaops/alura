@@ -35,6 +35,7 @@ export class EditarPensamentoComponent implements OnInit {
           Validators.pattern(/^[a-z]+$/)
         ])],
         modelo: [pensamento.modelo],
+        favorito: [pensamento.favorito]
       })
     })   
   }
