@@ -27,14 +27,15 @@ export class CriarPensamentoComponent implements OnInit {
       // regex
       autoria: ['', Validators.compose([
         Validators.required,
-        Validators.minLength(3)
+        Validators.minLength(3),
+        Validators.pattern(/^[a-z]+$/)
       ])],
       modelo: ['modelo1']
     })
   }
 
   criarPensamento() {
-    console.log(this.formulario.get('autoria')?.errors);
+    // console.log(this.formulario.get('autoria')?.errors);
 
     if(this.formulario.valid) {
       this.service.criar(this.formulario.value).subscribe(() => this.router.navigate(['/listarPensamento']))

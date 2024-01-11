@@ -26,7 +26,13 @@
     </div>
 
     <div class="mensagem__erro" *ngIf="formulario.get('autoria')?.errors?.['minlength'] && formulario.get('autoria')?.touched">
-      Autoria precisa ter no mínimo 3 caracteres.
+      Autoria precisa ter no mínimo 3 caracteres
+    </div>
+
+    <div 
+      class="mensagem__erro" 
+      *ngIf="formulario.get('autoria')?.errors?.['pattern'] && formulario.get('autoria')?.touched">
+      Autoria tem que ser toda em caracteres minúsculos!
     </div>
 
     <label for="modelo">Selecione o modelo do card:</label>
