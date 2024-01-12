@@ -11,18 +11,20 @@ export class ListarPensamentoComponent implements OnInit {
   listaPensamentos: Pensamento[] = [];
   paginaAtual: number = 1;
   haMaisPensamentos: boolean = true;
-  filtro: string = ''
+  filtro: string = '';
+  favoritos: boolean = false;
+  listaFavortios: Pensamento[] = []
 
   constructor(private service: PensamentoService) { }
 
   ngOnInit(): void {
     // faz parte do ciclo de vida do componente. toda lógica que entra aqui é o q vc quer q aconteça assim q a página carrega. 
 
-    this.service.listar(this.paginaAtual, this.filtro).subscribe((listaPensamentos) => this.listaPensamentos = listaPensamentos);
+    this.service.listar(this.paginaAtual, this.filtro, this.favoritos).subscribe((listaPensamentos) => this.listaPensamentos = listaPensamentos);
   }
 
   carregarMaisPensamentos() {
-    this.service.listar(++this.paginaAtual, this.filtro)
+    this.service.listar(++this.paginaAtual, this.filtro, this.favoritos)
       .subscribe(listaPensamentos => {
         this.listaPensamentos.push(...listaPensamentos)
         if(!listaPensamentos.length) this.haMaisPensamentos = false;
@@ -32,18 +34,20 @@ export class ListarPensamentoComponent implements OnInit {
   pesquisarPensamentos() {
     this.haMaisPensamentos = true;
     this.paginaAtual = 1;
-    this.service.listar(this.paginaAtual, this.filtro)
+    this.service.listar(this.paginaAtual, this.filtro, this.favoritos)
       .subscribe(listaPensamentos => {
         this.listaPensamentos = listaPensamentos
       });
   }
 
   listarFavoritos() {
+    this.favoritos = true
     this.haMaisPensamentos = true
     this.paginaAtual = 1
-    this.service.listarPensamentoFavoritos(this.paginaAtual, this.filtro)
+    this.service.listar(this.paginaAtual, this.filtro, this.favoritos)
       .subscribe(listaPensamentosFavoritos => {
         this.listaPensamentos = listaPensamentosFavoritos
+        this.listaFavortios = listaPensamentosFavoritos
       })
   }
 }

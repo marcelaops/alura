@@ -24,7 +24,10 @@
 
   <div class="mural" *ngIf="listaPensamentos.length > 0, else semPensamentos">
     <div *ngFor="let pensamento of listaPensamentos">
-      <app-pensamento [pensamento]="pensamento"></app-pensamento>
+      <app-pensamento 
+        [pensamento]="pensamento"
+        [listaFavoritos]="listaFavortios"
+      ></app-pensamento>
     </div>
   </div>
 </section>
