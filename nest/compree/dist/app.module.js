@@ -14,6 +14,8 @@ const produto_module_1 = require("./produto/produto.module");
 const usuario_module_1 = require("./usuario/usuario.module");
 const postgres_config_service_1 = require("./config/postgres.config.service");
 const pedido_module_1 = require("./pedido/pedido.module");
+const core_1 = require("@nestjs/core");
+const filtro_de_excessao_http_1 = require("./filtros/filtro-de-excessao-http");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -30,6 +32,7 @@ AppModule = __decorate([
             }),
             pedido_module_1.PedidoModule,
         ],
+        providers: [{ provide: core_1.APP_FILTER, useClass: filtro_de_excessao_http_1.FiltroDeExcecapHttp }]
     })
 ], AppModule);
 exports.AppModule = AppModule;

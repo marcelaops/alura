@@ -45,6 +45,8 @@ let ProdutoService = class ProdutoService {
     }
     async atualizaProduto(id, novosDados) {
         const entityName = await this.produtoRepository.findOneBy({ id });
+        if (entityName == null)
+            throw new common_1.NotFoundException('o produto não foi encontrado.');
         Object.assign(entityName, novosDados);
         return this.produtoRepository.save(entityName);
     }

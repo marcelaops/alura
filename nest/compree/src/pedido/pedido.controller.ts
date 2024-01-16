@@ -24,12 +24,12 @@ export class PedidoController {
     return await this.pedidoService.getPedidosDeUsuario(usuarioId);
   }
 
-  @Put()
-  async atualizaPedido(
-    @Param('pedidoId') pedidoId: string,
-    @Body() dadosDeAtualização: AtualizaPedidoDto
+  @Patch(':id')
+  atualizaPedido(
+    @Param('id') pedidoId: string,
+    @Body() dadosDeAtualizacao: AtualizaPedidoDto,
   ) {
-    const pedidoAtualizado = await this.pedidoService.atualizaPedido(pedidoId, dadosDeAtualização);
+    const pedidoAtualizado = this.pedidoService.atualizaPedido(pedidoId, dadosDeAtualizacao);
     return pedidoAtualizado;
   }
 }

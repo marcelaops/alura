@@ -27,13 +27,29 @@ let PedidoService = class PedidoService {
         this.usuarioRepository = usuarioRepository;
         this.produtoRepository = produtoRepository;
     }
+    async buscaUsuario(id) {
+        const usuario = await this.usuarioRepository.findOneBy({ id });
+        if (usuario == null)
+            throw new common_1.NotFoundException('o usuario não foi encontrado.');
+        return usuario;
+    }
+    trataDadosDoPedido(dadosDoPedido, produtosRelacionados) {
+        dadosDoPedido.itensPedido.forEach((itemPedido) => {
+            const produtoRelacionado = produtosRelacionados.find((produto) => produto.id === itemPedido.produtoId);
+            if (produtoRelacionado == undefined)
+                throw new common_1.NotFoundException(`o produto com id ${itemPedido.produtoId} não foi encontrado`);
+            if (itemPedido.quantidade > produtoRelacionado.quantidadeDisponivel)
+                throw new common_1.BadRequestException(`a quantidade solicitada de ${itemPedido.quantidade} é maior que a disponível de ${produtoRelacionado.quantidadeDisponivel} para o produto ${produtoRelacionado.nome}`);
+        });
+    }
     async cadastraPedido(usuarioId, dadosDoPedido) {
-        const usuario = await this.usuarioRepository.findOneBy({ id: usuarioId });
+        const usuario = await this.buscaUsuario(usuarioId);
         const produtosIds = dadosDoPedido.itensPedido.map((itemPedido) => itemPedido.produtoId);
         const produtosRelacionados = await this.produtoRepository.findBy({ id: (0, typeorm_2.In)(produtosIds) });
         const pedidoEntity = new pedido_entity_1.PedidoEntity();
         pedidoEntity.status = statuspedido_enum_1.StatusPedido.EM_PROCESSAMENTO;
         pedidoEntity.usuario = usuario;
+        this.trataDadosDoPedido(dadosDoPedido, produtosRelacionados);
         const itensPedidoEntidades = dadosDoPedido.itensPedido.map((itemPedido) => {
             const produtoRelacionado = produtosRelacionados.find((produto) => produto.id === itemPedido.produtoId);
             const itemPedidoEntity = new itempedido_entity_1.ItemPedidoEntity();
@@ -63,9 +79,8 @@ let PedidoService = class PedidoService {
     }
     async atualizaPedido(id, dto) {
         const pedido = await this.pedidoRepository.findOneBy({ id });
-        if (pedido === null) {
+        if (pedido === null)
             throw new common_1.NotFoundException('O pedido não foi encontrado.');
-        }
         Object.assign(pedido, dto);
         return this.pedidoRepository.save(pedido);
     }

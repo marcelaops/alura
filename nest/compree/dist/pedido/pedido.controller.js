@@ -28,8 +28,8 @@ let PedidoController = class PedidoController {
     async getPedidosDeUsuario(usuarioId) {
         return await this.pedidoService.getPedidosDeUsuario(usuarioId);
     }
-    async atualizaPedido(pedidoId, dadosDeAtualização) {
-        const pedidoAtualizado = await this.pedidoService.atualizaPedido(pedidoId, dadosDeAtualização);
+    atualizaPedido(pedidoId, dadosDeAtualizacao) {
+        const pedidoAtualizado = this.pedidoService.atualizaPedido(pedidoId, dadosDeAtualizacao);
         return pedidoAtualizado;
     }
 };
@@ -49,12 +49,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], PedidoController.prototype, "getPedidosDeUsuario", null);
 __decorate([
-    (0, common_1.Put)(),
-    __param(0, (0, common_1.Param)('pedidoId')),
+    (0, common_1.Patch)(':id'),
+    __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, AtualizaPedido_dto_1.AtualizaPedidoDto]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], PedidoController.prototype, "atualizaPedido", null);
 PedidoController = __decorate([
     (0, common_1.Controller)('pedidos'),

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ListaProdutoDTO } from './dto/ListaProduto.dto';
 import { ProdutoEntity } from './produto.entity';
@@ -9,7 +9,7 @@ import { CriaProdutoDTO } from './dto/CriaProduto.dto';
 @Injectable()
 export class ProdutoService {
   constructor(
-    @InjectRepository(ProdutoEntity)
+    @InjectRepository(ProdutoEntity) /* aconteceu um erro aqui, depois de mudarmos o tsconfig.json. Ele acontece pq a versãodo projeto n está compativel com a do vsc -> p ajeitar ver o video do 4.2*/
     private readonly produtoRepository: Repository<ProdutoEntity>,
   ) {}
 
@@ -49,7 +49,11 @@ export class ProdutoService {
 
   async atualizaProduto(id: string, novosDados: AtualizaProdutoDTO) {
     const entityName = await this.produtoRepository.findOneBy({ id });
+
+    if(entityName == null) throw new NotFoundException('o produto não foi encontrado.') /* o  NotFoundException lança o erro 404*/
+
     Object.assign(entityName, novosDados);
+
     return this.produtoRepository.save(entityName);
   }
 

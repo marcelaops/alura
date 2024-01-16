@@ -9,7 +9,9 @@ export declare class PedidoService {
     private readonly usuarioRepository;
     private readonly produtoRepository;
     constructor(pedidoRepository: Repository<PedidoEntity>, usuarioRepository: Repository<UsuarioEntity>, produtoRepository: Repository<ProdutoEntity>);
+    private buscaUsuario;
+    private trataDadosDoPedido;
     cadastraPedido(usuarioId: string, dadosDoPedido: CriaPedidoDTO): Promise<PedidoEntity>;
-    getPedidosDeUsuario(usuarioId: string): Promise<PedidoEntity> | "usuário não encontrado";
+    getPedidosDeUsuario(usuarioId: string): Promise<PedidoEntity | null> | "usuário não encontrado";
     atualizaPedido(id: string, dto: AtualizaPedidoDto): Promise<PedidoEntity>;
 }
