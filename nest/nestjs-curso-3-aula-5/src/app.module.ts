@@ -25,10 +25,12 @@ import { redisStore } from 'cache-manager-redis-yet';
     PedidoModule,
     CacheModule.registerAsync({
       useFactory: async () => ({
-        store: await redisStore({ ttl: 3600 * 1000 }),
+        store: await redisStore({ ttl: 10 * 1000 }),
       }),
       isGlobal: true,
-    }) /* ttl: time to live, aó tá em 10 segundos */,
+    }),
+    /* ttl: time to live, aó tá em 10 segundos,  não é ideal q esse ttl seja mto grande. Para os dados não ficarem desatualizados.
+     */
   ],
   providers: [
     {
