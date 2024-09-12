@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   Post,
   Put,
@@ -12,11 +13,16 @@ import {
 import { AtualizaProdutoDTO } from './dto/AtualizaProduto.dto';
 import { CriaProdutoDTO } from './dto/CriaProduto.dto';
 import { ProdutoService } from './produto.service';
-import { CacheInterceptor } from '@nestjs/cache-manager';
+import { CACHE_MANAGER, CacheInterceptor } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
+import { ProdutoEntity } from './produto.entity';
 
 @Controller('produtos')
 export class ProdutoController {
-  constructor(private readonly produtoService: ProdutoService) {}
+  constructor(
+    private readonly produtoService: ProdutoService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {}
 
   @Post()
   async criaNovo(@Body() dadosProduto: CriaProdutoDTO) {
@@ -33,18 +39,33 @@ export class ProdutoController {
   @Get()
   @UseInterceptors(CacheInterceptor)
   async listaTodos() {
-    return this.produtoService.listaProdutos();
+    return await this.produtoService.listaProdutos();
   }
 
   @Get('/:id')
-  @UseInterceptors(CacheInterceptor)
+  // @UseInterceptors(CacheInterceptor)
   async listaUm(@Param('id') id: string) {
-    const produtoSalvo = await this.produtoService.listaUmProduto(id);
+    // const produto = await this.produtoService.listaUmProduto(id);
 
-    console.log('Produto sendo buscado do BD!');
-    /* com esse console, vemos que no intervalo de 10 (ttl declarado no appModule), a mesma resposta se apertamos n vezes. Porém só faz a req p o banco 1 única vez. Essas infos estão armazenadas no cache */
+    // console.log('Produto sendo buscado do BD!');
+    // /* com esse console, vemos que no intervalo de   10 (ttl declarado no appModule), a mesma resposta se apertamos n vezes. Porém só faz a req p o banco 1 única vez. Essas infos estão armazenadas no cache */
 
-    return produtoSalvo;
+    // return { mensagem: 'Produto encontrado', produto };
+    let produto = await this.cacheManager.get(`produto-${id}`);
+
+    if (!produto) {
+      console.log(
+        'Obtendo produto do cache!',
+      ); /* tá sempre entrando aqui, n entendi pq */
+      produto = await this.produtoService.listaUmProduto(id);
+
+      await this.cacheManager.set(`produto-${id}`, produto, 10);
+    }
+
+    return {
+      mensagem: 'Produto obtido com sucesso.',
+      produto,
+    };
   }
 
   @Put('/:id')
