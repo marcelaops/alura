@@ -43,29 +43,31 @@ export class ProdutoController {
   }
 
   @Get('/:id')
-  // @UseInterceptors(CacheInterceptor)
+  @UseInterceptors(CacheInterceptor)
   async listaUm(@Param('id') id: string) {
-    // const produto = await this.produtoService.listaUmProduto(id);
+    const produto = await this.produtoService.listaUmProduto(id);
 
-    // console.log('Produto sendo buscado do BD!');
-    // /* com esse console, vemos que no intervalo de   10 (ttl declarado no appModule), a mesma resposta se apertamos n vezes. Porém só faz a req p o banco 1 única vez. Essas infos estão armazenadas no cache */
+    console.log('Produto sendo buscado do BD!');
+    /* com esse console, vemos que no intervalo de   10 (ttl declarado no appModule), a mesma resposta se apertamos n vezes. Porém só faz a req p o banco 1 única vez. Essas infos estão armazenadas no cache */
 
-    // return { mensagem: 'Produto encontrado', produto };
-    let produto = await this.cacheManager.get(`produto-${id}`);
+    return { mensagem: 'Produto encontrado', produto };
 
-    if (!produto) {
-      console.log(
-        'Obtendo produto do cache!',
-      ); /* tá sempre entrando aqui, n entendi pq */
-      produto = await this.produtoService.listaUmProduto(id);
+    // tentando otimizar, mas não deu muito certo
+    // let produto = await this.cacheManager.get(`produto-${id}`);
 
-      await this.cacheManager.set(`produto-${id}`, produto, 10);
-    }
+    // if (!produto) {
+    //   console.log(
+    //     'Obtendo produto do cache!',
+    //   ); /* tá sempre entrando aqui, n entendi pq */
+    //   produto = await this.produtoService.listaUmProduto(id);
 
-    return {
-      mensagem: 'Produto obtido com sucesso.',
-      produto,
-    };
+    //   await this.cacheManager.set(`produto-${id}`, produto, 10);
+    // }
+
+    // return {
+    //   mensagem: 'Produto obtido com sucesso.',
+    //   produto,
+    // };
   }
 
   @Put('/:id')
