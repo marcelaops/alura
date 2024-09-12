@@ -15,6 +15,11 @@ import { CriaPedidoDTO } from './dto/CriaPedido.dto';
 export class PedidoController {
   constructor(private readonly pedidoService: PedidoService) {}
 
+  @Get('hello')
+  async() {
+    return this.pedidoService.getHello();
+  }
+
   @Post()
   async criaPedido(
     @Query('usuarioId') usuarioId: string,

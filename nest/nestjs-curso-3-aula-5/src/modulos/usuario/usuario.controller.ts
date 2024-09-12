@@ -17,13 +17,19 @@ export class UsuarioController {
   constructor(private usuarioService: UsuarioService) {}
 
   @Post()
-  async criaUsuario(@Body() dadosDoUsuario: CriaUsuarioDTO) {
-    const usuarioCriado = await this.usuarioService.criaUsuario(dadosDoUsuario);
+  async criaUsuario(
+    @Body() dadosDoUsuario: CriaUsuarioDTO,
+    @Body('senha') senha: string,
+  ) {
+    console.log(senha);
+    return;
 
-    return {
-      usuario: new ListaUsuarioDTO(usuarioCriado.id, usuarioCriado.nome),
-      messagem: 'usuário criado com sucesso',
-    };
+    // const usuarioCriado = await this.usuarioService.criaUsuario(dadosDoUsuario);
+
+    // return {
+    //   usuario: new ListaUsuarioDTO(usuarioCriado.id, usuarioCriado.nome),
+    //   messagem: 'usuário criado com sucesso',
+    // };
   }
 
   @Get()

@@ -25,6 +25,10 @@ export class PedidoService {
     private readonly produtoRepository: Repository<ProdutoEntity>,
   ) {}
 
+  getHello(): string {
+    return 'ok';
+  }
+
   private async buscaUsuario(id) {
     const usuario = await this.usuarioRepository.findOneBy({ id });
 
@@ -106,7 +110,7 @@ export class PedidoService {
     const usuario = await this.usuarioRepository.findOneBy({ id: usuarioId });
 
     if (usuario === null) {
-      throw new NotFoundException('O usuário não foi encontrado.')
+      throw new NotFoundException('O usuário não foi encontrado.');
     }
 
     return this.pedidoRepository.find({
