@@ -22,7 +22,7 @@ export class UsuarioController {
     @Body() { senha, ...dadosDoUsuario }: CriaUsuarioDTO,
     @Body('senha', HashearSenhaPipe) senhaHasheada: string,
   ) {
-    console.log('senhaHasheada', senhaHasheada);
+    // console.log('senhaHasheada', senhaHasheada);
 
     const usuarioCriado = await this.usuarioService.criaUsuario({
       ...dadosDoUsuario,
