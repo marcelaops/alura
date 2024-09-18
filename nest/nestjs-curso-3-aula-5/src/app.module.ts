@@ -27,12 +27,12 @@ import { AutenticacaoModule } from './modulos/autenticacao/autenticacao.module';
     CacheModule.registerAsync({
       useFactory: async () => ({
         store: await redisStore({ ttl: 10 * 1000 }),
+        /* ttl: time to live, aó tá em 10 segundos,  não é ideal q esse ttl seja mto grande. Para os dados não ficarem desatualizados.
+         */
       }),
       isGlobal: true,
     }),
     AutenticacaoModule,
-    /* ttl: time to live, aó tá em 10 segundos,  não é ideal q esse ttl seja mto grande. Para os dados não ficarem desatualizados.
-     */
   ],
   providers: [
     {

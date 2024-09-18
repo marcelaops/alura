@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, Matches, MinLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, Matches } from 'class-validator';
 // import { EmailEhUnico } from '../validacao/email-eh-unico.validator';
 
 export class CriaUsuarioDTO {
