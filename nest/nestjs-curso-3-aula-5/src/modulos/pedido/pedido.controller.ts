@@ -6,11 +6,16 @@ import {
   Patch,
   Param,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { PedidoService } from './pedido.service';
 import { AtualizaPedidoDto } from './dto/AtualizaPedido.dto';
 import { CriaPedidoDTO } from './dto/CriaPedido.dto';
+import { AutenticacaoGuard } from '../autenticacao/autenticacao/autenticacao.guard';
 
+@UseGuards(
+  AutenticacaoGuard,
+) /* aqui dá proteção para todas as rotas desse aarquivo */
 @Controller('pedidos')
 export class PedidoController {
   constructor(private readonly pedidoService: PedidoService) {}
