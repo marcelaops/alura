@@ -26,6 +26,7 @@ export class PedidoController {
   }
 
   @Post()
+  @UseGuards(AutenticacaoGuard)
   async criaPedido(
     @Query('usuarioId') usuarioId: string,
     @Body() dadosDoPedido: CriaPedidoDTO,
