@@ -21,7 +21,7 @@ export class ProdutoService {
     return this.produtoRepository.save(produtoEntity);
   }
 
-  async listProdutos() {
+  async listaProdutos() {
     const produtosSalvos = await this.produtoRepository.find({
       relations: {
         imagens: true,
@@ -38,6 +38,29 @@ export class ProdutoService {
         ),
     );
     return produtosLista;
+  }
+
+  async listaUmProduto(id: string) {
+    const produtoSalvo = await this.produtoRepository.findOne({
+      where: { id },
+      relations: {
+        imagens: true,
+        caracteristicas: true,
+      },
+    });
+
+    if (produtoSalvo === null) {
+      throw new NotFoundException('O produto não foi encontrado');
+    }
+
+    const listaProduto = new ListaProdutoDTO(
+      produtoSalvo.id,
+      produtoSalvo.nome,
+      produtoSalvo.caracteristicas,
+      produtoSalvo.imagens,
+    );
+
+    return listaProduto;
   }
 
   async atualizaProduto(id: string, novosDados: AtualizaProdutoDTO) {
