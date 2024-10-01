@@ -9,7 +9,7 @@ import { Item } from 'src/app/interfaces/iItem';
 })
 export class ItemComponent implements OnInit, OnChanges {
   @Input() item!: Item
-  @Output() emitindoItemParaEditar = new EventEmitter;
+  @Output() emitindoItemParaEditar = new EventEmitter();
 
   faPen = faPen;
   faTrash = faTrash
