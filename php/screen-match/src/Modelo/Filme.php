@@ -14,6 +14,7 @@ class Filme extends Titulo {
             parent::__construct($nome, $anoLancamento, $genero); /* chama o cosntructor da classe base */
         }
 
+        #[Override]
         public function duracaoEmMin() : int {
             return $this->duracaoEmMin;
         }

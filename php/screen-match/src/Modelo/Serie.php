@@ -31,6 +31,7 @@ class Serie extends Titulo {
     //     return $somaNotas / $quantidadeNotas;
     // }
 
+    #[Override]
     public function duracaoEmMin() : int {
         return $this->temporadas * $this->minutosPorEpisodio * $this->episodiosPorTemporadas;
     }
