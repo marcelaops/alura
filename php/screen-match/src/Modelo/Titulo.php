@@ -23,5 +23,9 @@ class Titulo {
 
         return $somaNotas / $quantidadeNotas;
     }
+
+    public function duracaoEmMin(): int {
+        return 0;
+    }
     
 }
