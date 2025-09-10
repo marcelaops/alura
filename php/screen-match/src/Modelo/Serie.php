@@ -1,6 +1,6 @@
 <?php
 
-class Serie extends Titulo {
+class Serie extends Titulo implements Avaliavel{
     // private array $notas;
 
     public function __construct(
